@@ -35,6 +35,39 @@ analyzeButton.addEventListener('click', async () => {
             resultDiv.innerHTML = '<p style="color:red;">Não foi possível analisar o link. 😢</p>';
         }
     } catch (error) {
-        resultDiv.innerHTML = '<p style="color:red;">Erro na análise. Tente novamente!</p>';
+          resultDiv.innerHTML = '<p style="color:red;">Erro na análise. Tente novamente!</p>';
+      }
+  });
+
+const contactForm = document.getElementById('contactForm');
+const formMessage = document.getElementById('formMessage');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', submitForm);
+}
+
+function submitForm(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    const emailRegex = /^\S+@\S+\.\S+$/;
+    const phoneRegex = /^\d{10,11}$/;
+
+    if (!emailRegex.test(email)) {
+        formMessage.textContent = 'Por favor, insira um e-mail válido.';
+        formMessage.style.color = 'red';
+        return;
     }
-});
+
+    if (!phoneRegex.test(phone)) {
+        formMessage.textContent = 'Por favor, insira um telefone válido com 10 ou 11 dígitos.';
+        formMessage.style.color = 'red';
+        return;
+    }
+
+    formMessage.textContent = 'Dados enviados com sucesso!';
+    formMessage.style.color = 'green';
+    contactForm.reset();
+}
